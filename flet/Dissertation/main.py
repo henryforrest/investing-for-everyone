@@ -94,8 +94,9 @@ def update_user_portfolio(action, stock_price, current_user):
 
 
 def predict_performance():
-    zip_path = "/Users/henryforrest/Documents/Computer Science Work/Dissertation/flet/Dissertation/agent.zip"
-
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    zip_path = os.path.join(base_dir, "agent.zip")
+    
     try:
         trained_model = PPO.load(zip_path)
         print("✅ Model loaded successfully!")
