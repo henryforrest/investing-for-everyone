@@ -1251,7 +1251,7 @@ def main(page: ft.Page):
                     ft.Text("Contact Us", size=40, weight="bold", color="#1e3a8a"),
                     ft.Divider(),
                     ft.Text(
-                        "To contact us please email us at ainvesting@notmail.com or call as at 0777755555",
+                        "To contact us please email us at ainvesting@notmail.com or call us at 0777755555",
                         size=20, color="#34495e"
                     ),
                     ft.Divider(),
