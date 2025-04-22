@@ -94,7 +94,7 @@ def update_user_portfolio(action, stock_price, current_user):
 
 
 def predict_performance():
-    zip_path = "agent.zip"
+    zip_path = "Dissertation/agent.zip"
 
     
     try:
