@@ -95,7 +95,7 @@ def update_user_portfolio(action, stock_price, current_user):
 
 def predict_performance():
     zip_path = "Dissertation/agent.zip"
-
+    
     
     try:
         trained_model = PPO.load(zip_path)
@@ -442,7 +442,7 @@ def main(page: ft.Page):
 
     # Function to show performance and make predictions
     def show_performance(page):
-        zip_path = "/Users/henryforrest/Documents/Computer Science Work/Dissertation/flet/Dissertation/agent.zip"
+        zip_path = "Dissertation/agent.zip"
 
         try:
             trained_model = PPO.load(zip_path)
