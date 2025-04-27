@@ -1086,51 +1086,66 @@ def main(page: ft.Page):
         shares_value = shares_owned * stock_price
         total_value = portfolio_size + shares_value
         
+        # Create pie chart
+        pie_chart = ft.PieChart(
+            sections=[
+                ft.PieChartSection(portfolio_size, title="Available Cash", color=ft.colors.GREEN, title_style=ft.TextStyle(color="#34495e", size=30)),
+                ft.PieChartSection(shares_value, title="Shares Value", color=ft.colors.BLUE, title_style=ft.TextStyle(color="#34495e", size=30)),
+            ],
+            expand=True,
+            width=300,
+            height=300,
+        )
+        
         # Create portfolio breakdown container
         portfolio_content = ft.Container(
-            content=ft.Column(
+            content=ft.Row(
                 controls=[
-                    ft.Text("Portfolio Breakdown", size=40, weight="bold", color="#1e3a8a"),
-                    ft.Divider(),
-                    ft.Text(f"Total Portfolio Value: ${total_value:,.2f}", size=25, color="#34495e"),
-                    ft.Text(f"Available Cash: ${portfolio_size:,.2f}", size=20, color="#2c3e50"),
-                    ft.Text(f"Shares Held: {shares_owned}", size=20, color="#2c3e50"),
-                    ft.Text(f"Current Stock Price: ${stock_price:,.2f}", size=20, color="#2c3e50"),
-                    ft.Text(f"Total Value of Shares: ${shares_value:,.2f}", size=20, color="#2c3e50"),
-                    ft.Divider(),
-                    ft.ElevatedButton(
-                        text="Withdraw Money",
-                        on_click=lambda e: show_withdraw(page),
-                        bgcolor="#1e3a8a",
-                        color="#ffffff"
+                    ft.Column(
+                        controls=[
+                            ft.Text("Portfolio Breakdown", size=40, weight="bold", color="#1e3a8a"),
+                            ft.Divider(),
+                            ft.Text(f"Total Portfolio Value: ${total_value:,.2f}", size=25, color="#34495e"),
+                            ft.Text(f"Available Cash: ${portfolio_size:,.2f}", size=20, color="#2c3e50"),
+                            ft.Text(f"Shares Held: {shares_owned}", size=20, color="#2c3e50"),
+                            ft.Text(f"Current Stock Price: ${stock_price:,.2f}", size=20, color="#2c3e50"),
+                            ft.Text(f"Total Value of Shares: ${shares_value:,.2f}", size=20, color="#2c3e50"),
+                            ft.Divider(),
+                            ft.ElevatedButton(
+                                text="Withdraw Money",
+                                on_click=lambda e: show_withdraw(page),
+                                bgcolor="#1e3a8a",
+                                color="#ffffff"
+                            ),
+                            ft.ElevatedButton(
+                                text="Sell Shares",
+                                on_click=lambda e: show_sell_shares(page),
+                                bgcolor="#1e3a8a",
+                                color="#ffffff"
+                            ),
+                            ft.ElevatedButton(
+                                text="Back to Home",
+                                on_click=lambda e: show_home(page),
+                                bgcolor="#1e3a8a",
+                                color="#ffffff"
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=20,
+                        horizontal_alignment=ft.CrossAxisAlignment.START,
                     ),
-                    ft.ElevatedButton(
-                        text="Sell Shares",
-                        on_click=lambda e: show_sell_shares(page),
-                        bgcolor="#1e3a8a",
-                        color="#ffffff"
-                    ),
-                    ft.ElevatedButton(
-                        text="Back to Home",
-                        on_click=lambda e: show_home(page),
-                        bgcolor="#1e3a8a",
-                        color="#ffffff"
-                    ),
+                    pie_chart  # Interactive Pie Chart positioned to the right
                 ],
-                alignment=ft.MainAxisAlignment.START,
-                spacing=20,
-                horizontal_alignment=ft.CrossAxisAlignment.START,
-                scroll=ft.ScrollMode.AUTO,
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
             height=page.height,
             width=page.width,
-            expand=True,  
+            expand=True,
             padding=ft.padding.all(20),
             bgcolor="#f4f6f9",
             gradient=gradient,
-            
         )
-
+        
         # Add navbar and portfolio content to the page
         page.add(navbar, portfolio_content)
         page.update()
