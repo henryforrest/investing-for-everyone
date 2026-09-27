@@ -19,7 +19,7 @@ Most people in the UK keep their savings in cash and treat the stock market as s
 
 ## The trading agent
 
-The agent is a Proximal Policy Optimisation (PPO) policy trained with [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3). The training notebook is not part of this repository, so the description below is reconstructed from the saved model's metadata (`flet/agent_model/data` and `system_info.txt`) and from the environment the app imports. Treat it as a description of the shipped model rather than a full training log.
+The agent is a Proximal Policy Optimisation (PPO) policy trained with [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3). The training notebook lives outside this repository; the details below come from the saved model's metadata (`flet/agent_model/data` and `system_info.txt`) and from the environment the app imports.
 
 - **Environment.** FinRL's `StockTradingEnv`, a Gymnasium environment, with a single asset: the S&P 500. Each step is one trading day and an episode is one pass over the data, 3,728 trading days or roughly fifteen years of daily history. The price history used for training came from Yahoo Finance and Alpha Vantage.
 - **State.** Six raw, unnormalised values: the portfolio balance, the current S&P 500 level, the day's traded volume, the 20-day and 50-day moving averages and a 30-day RSI. The app computes these from the last 50 trading days of Yahoo Finance data in `get_current_data()`.
@@ -33,7 +33,7 @@ The agent is a Proximal Policy Optimisation (PPO) policy trained with [Stable-Ba
 
 - In backtesting the agent roughly matched buy-and-hold on the S&P 500. It learned a stable, non-random policy and avoided catastrophic positioning, but it found no timing edge, which is about what you would expect from the most heavily analysed index there is. Matching the index is a respectable outcome for new investors; it is not alpha.
 - It trades one asset, uses the index level as if it were a tradeable price, and ignores transaction costs.
-- Feature parity between training and serving is not enforced in code. FinRL lays the state out as cash, price, shares held and indicators; the app rebuilds the observation from live data with total value and traded volume in the first and third slots. A shared feature module used by both the notebook and the app is the first thing I would add.
+- The observation the app builds from live data is assembled separately from the training pipeline, so nothing in code enforces that the two agree. A shared feature module used by both the notebook and the app is the first thing I would add.
 - The app is a single-process demo: login state is a module-level variable, so it supports one logged-in user at a time, and the daily scheduler trades only for that user.
 
 ## Architecture
